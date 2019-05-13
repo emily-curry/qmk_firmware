@@ -13,5 +13,7 @@
         "*.cpp": "cpp",
         "*.hpp": "cpp",
         "xstddef": "c"
-    }
+    },
+    // emily-curry // custom below
+    "editor.formatOnSave": false
 }
