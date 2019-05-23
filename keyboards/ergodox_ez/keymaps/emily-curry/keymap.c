@@ -1,6 +1,7 @@
 #include "ergodox_ez.h"
 #include "version.h"
 
+// Just here to squash red squiggles
 #ifdef EMILY_EDITOR
     #include "../../config.h"
     #include "./config.h"
@@ -21,16 +22,16 @@ rgb_config_t rgb_matrix_config;
 enum custom_layers {
     BASE = 0, // default layer
     SYMB, // symbols
-    MDIA // media keys
+    MDIA, // media keys
+    GAME, // game base
+    GME2 // game alt
 };
 
 enum custom_keycodes {
     PLACEHOLDER = SAFE_RANGE, // can always be here
     EPRM,
     RGB_SLD_TGL,
-    GAY,
-    HSV_153_77_255,
-    HSV_11_255_255
+    GAY
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -52,7 +53,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 ,------|------|------|       |------+------+------.
  *                                 |      |      | Win  |       | Esc  |      |      |
  *                                 | Spc  | Bkspc|------|       |------| Tab  |Enter |
- *                                 |      |      | L1   |       | Alt  |      |      |
+ *                                 |      |      | SYMB |       | Alt  |      |      |
  *                                 `--------------------'       `--------------------'
  */
 // If it accepts an argument (i.e, is a function), it doesn't need KC_.
@@ -80,11 +81,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 1: Symbol Layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * | RGBTGL |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |      |  F6  |  F7  |  F8  |  F9  |  F10 |   F11  |
+ * | RGBTGL |  F1  |  F2  |  F3  |  F4  |  F5  |      |           | GAME |  F6  |  F7  |  F8  |  F9  |  F10 |   F11  |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |   !  |   @  |   {  |   }  |   |  |      |           |      |   Up |   7  |   8  |   9  |   /  |   F12  |
+ * | RGBVAI |   !  |   @  |   {  |   }  |   |  |      |           |      |   Up |   7  |   8  |   9  |   /  |   F12  |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |   #  |   $  |   (  |   )  |   `  |------|           |------| Down |   4  |   5  |   6  |   *  |        |
+ * | RGBVAD |   #  |   $  |   (  |   )  |   `  |------|           |------| Down |   4  |   5  |   6  |   *  |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * |        |   %  |   ^  |   [  |   ]  |   ~  |      |           |      |   &  |   1  |   2  |   3  |   -  |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
@@ -102,15 +103,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [SYMB] = LAYOUT_ergodox(
         // left hand
         RGB_SLD_TGL,KC_F1,      KC_F2,      KC_F3,      KC_F4,      KC_F5,      KC_TRNS,
-        KC_TRNS,    KC_EXLM,    KC_AT,      KC_LCBR,    KC_RCBR,    KC_PIPE,    KC_TRNS,
-        KC_TRNS,    KC_HASH,    KC_DLR,     KC_LPRN,    KC_RPRN,    KC_GRV,
+        RGB_VAI,    KC_EXLM,    KC_AT,      KC_LCBR,    KC_RCBR,    KC_PIPE,    KC_TRNS,
+        RGB_VAD,    KC_HASH,    KC_DLR,     KC_LPRN,    KC_RPRN,    KC_GRV,
         KC_TRNS,    KC_PERC,    KC_CIRC,    KC_LBRC,    KC_RBRC,    KC_TILD,    KC_TRNS,
         KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
                                                                     KC_TRNS,    KC_TRNS,
                                                                                 KC_TRNS,
                                                         KC_TRNS,    KC_TRNS,    KC_TRNS,
         // right hand
-        KC_TRNS,    KC_F6,      KC_F7,      KC_F8,      KC_F9,      KC_F10,     KC_F11,
+        TO(GAME),   KC_F6,      KC_F7,      KC_F8,      KC_F9,      KC_F10,     KC_F11,
         KC_TRNS,    KC_UP,      KC_KP_7,    KC_KP_8,    KC_KP_9,    KC_PSLS,    KC_F12,
                     KC_DOWN,    KC_KP_4,    KC_KP_5,    KC_KP_6,    KC_PAST,    KC_TRNS,
         KC_TRNS,    KC_AMPR,    KC_KP_1,    KC_KP_2,    KC_KP_3,    KC_PMNS,    KC_TRNS,
@@ -160,16 +161,103 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        KC_TRNS,
        KC_TRNS, KC_TRNS, KC_WBAK
 ),
+/* Keymap 3: Game
+ *
+ * ,--------------------------------------------------.           ,--------------------------------------------------.
+ * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
+ * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
+ * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |------|           |------|      |      |      |      |      |        |
+ * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
+ * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
+ *   |      |      |      |      |      |                                       |      |      |      |      |      |
+ *   `----------------------------------'                                       `----------------------------------'
+ *                                        ,-------------.       ,-------------.
+ *                                        |      |      |       |      |      |
+ *                                 ,------|------|------|       |------+------+------.
+ *                                 |      |      |      |       |      |      |      |
+ *                                 |      |      |------|       |------|      |      |
+ *                                 |      |      | GME2 |       |      |      |      |
+ *                                 `--------------------'       `--------------------'
+ */
+// GAME BASE
+[GAME] = LAYOUT_ergodox(
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+                                           KC_TRNS, KC_TRNS,
+                                                    KC_TRNS,
+                                  KC_TRNS, KC_TRNS, MO(GME2),
+    // right hand
+       KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+                          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS, KC_TRNS,
+       KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS
+),
+/* Keymap 4: Game Ctrl Mods
+ *
+ * ,--------------------------------------------------.           ,--------------------------------------------------.
+ * |        | Ctl1 | Ctl2 | Ctl3 | Ctl4 | Ctl5 |      |           | BASE | Ctl6 | Ctl7 | Ctl8 | Ctl9 | Ctl0 |        |
+ * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
+ * |        | CtlQ | CtlW |      | CtlF | CtlP |      |           |      |      |      |      |      |      |        |
+ * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+ * |        | CtlA |      |      |      | CtlD |------|           |------|      |      |      |      |      |        |
+ * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+ * |        | CtlZ | CtlX | CtlC | CtlV | CtlB |      |           |      |      |      |      |      |      |        |
+ * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
+ *   |      | Ctl' | Ctl` |      |      |                                       |      |      |      |      |      |
+ *   `----------------------------------'                                       `----------------------------------'
+ *                                        ,-------------.       ,-------------.
+ *                                        |      |      |       |      |      |
+ *                                 ,------|------|------|       |------+------+------.
+ *                                 |      |      |      |       |      |      |      |
+ *                                 |      |      |------|       |------|      |      |
+ *                                 |      |      |      |       |      |      |      |
+ *                                 `--------------------'       `--------------------'
+ */
+// GAME BASE
+[GME2] = LAYOUT_ergodox(
+       KC_TRNS, LCTL(KC_1), LCTL(KC_2), LCTL(KC_3), LCTL(KC_4), LCTL(KC_5), KC_TRNS,
+       KC_TRNS, LCTL(KC_Q), LCTL(KC_W), KC_TRNS,    LCTL(KC_P), LCTL(KC_G), KC_TRNS,
+       KC_TRNS, LCTL(KC_A), KC_TRNS,    KC_TRNS,    KC_TRNS,    LCTL(KC_D),
+       KC_TRNS, LCTL(KC_Z), LCTL(KC_X), LCTL(KC_C), LCTL(KC_V), LCTL(KC_B), KC_TRNS,
+       KC_TRNS, LCTL(KC_QUOT),LCTL(KC_GRV),KC_TRNS, KC_TRNS,
+                                                                KC_TRNS,    KC_TRNS,
+                                                                            KC_TRNS,
+                                                    KC_TRNS,    KC_TRNS,    KC_TRNS,
+    // right hand
+       TO(BASE), LCTL(KC_6), LCTL(KC_7), LCTL(KC_8), LCTL(KC_9), LCTL(KC_0), KC_TRNS,
+       KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+                          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS, KC_TRNS,
+       KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS
+),
 };
 
-// illuminates all the leds of a layer with the same color, hsv format
-// contains data for the hue and saturation only, since value (or brightness) will be overriden with the value from the eeprom to take into account the user's brightness settings
+/**
+ * Illuminates all the leds of a layer with the same color, hsv format.
+ * Contains data for the hue and saturation only, since value (aka brightness)
+ * will be overriden with the value from the eeprom to take into account the user's brightness settings
+ */
 const uint8_t PROGMEM layercolors[][2] = {
     [BASE] = {240,100} // Currently unused
 };
 
-// illuminate individual keys on a layer, defined per-layer. hsv format
-// value (last index) is also ignored here unless 0 (then that key appears off)
+/**
+ * Illuminate individual keys on a layer, defined per-layer, hsv format.
+ * Value (last index) is also ignored here unless 0 (then that key appears off).
+ */
 const uint8_t PROGMEM ledcolors[][DRIVER_LED_TOTAL][3] = {
     [BASE] = {
         // right side
@@ -200,11 +288,43 @@ const uint8_t PROGMEM ledcolors[][DRIVER_LED_TOTAL][3] = {
         {150,140,255},   {150,180,255},   {150,180,255},  {150,140,255},  {150,90,255},
         {150,140,255},   {150,180,255},   {150,180,255},  {150,140,255},  {150,90,255},
                         {150,140,255},   {150,140,255},   {150,90,255},   {150,90,255}
-    }
+    },
+    [GAME] = {
+        // right side
+        {42,153,1},   {42,153,1},   {42,153,1},   {42,153,1},   {42,153,1},
+        {240,70,1},   {240,70,1},   {240,70,1},   {240,70,1},   {240,70,1},
+        {240,70,1},  {240,70,1},  {240,70,1},  {240,70,1},  {240,70,1},
+        {240,70,1},   {240,70,1},   {240,70,1},   {240,70,1},   {240,70,1},
+                        {240,50,1},   {240,50,1},   {240,50,1},   {240,50,1},
+
+        // left side (mirrored)
+        {42,153,1},   {42,153,1},   {42,153,1},   {42,153,1},   {42,153,1},
+        {240,70,1},   {240,70,1},   {98,180,1},   {240,70,1},   {240,70,1},
+        {240,70,1},  {98,180,1},  {98,180,1},  {98,180,1},  {240,70,1},
+        {240,70,1},   {240,70,1},   {240,70,1},   {240,70,1},   {240,70,1},
+                        {240,50,1},   {240,50,1},   {240,50,1},   {240,50,1},
+    },
+    [GME2] = {
+        // right side
+        {130,153,1},   {130,153,1},   {130,153,1},   {130,153,1},   {130,153,1},
+        {240,70,1},   {240,70,1},   {240,70,1},   {240,70,1},   {240,70,1},
+        {240,70,1},  {240,70,1},  {240,70,1},  {240,70,1},  {240,70,1},
+        {240,70,1},   {240,70,1},   {240,70,1},   {240,70,1},   {240,70,1},
+                        {240,50,1},   {240,50,1},   {240,50,1},   {240,50,1},
+
+        // left side (mirrored)
+        {130,153,1},   {130,153,1},   {130,153,1},   {130,153,1},   {130,153,1},
+        {240,70,1},   {240,70,1},   {98,180,1},   {240,70,1},   {240,70,1},
+        {240,70,1},  {98,180,1},  {98,180,1},  {98,180,1},  {240,70,1},
+        {240,70,1},   {240,70,1},   {240,70,1},   {240,70,1},   {240,70,1},
+                        {240,50,1},   {240,50,1},   {240,50,1},   {240,50,1},
+    },
 };
 
 
-// Runs just one time when the keyboard initializes.
+/**
+ * Executed just one time when the keyboard initializes.
+ */
 void matrix_init_user(void) {
     rgb_matrix_config.raw = eeprom_read_dword(EECONFIG_RGB_MATRIX);
     ergodox_board_led_off();
@@ -233,6 +353,9 @@ void set_leds_color( int layer) {
   }
 }
 
+/**
+ * Executes on layer change, when it is appropriate to modify the LED matrix.
+ */
 void rgb_matrix_indicators_user(void) {
   uint32_t mode = rgblight_get_mode();
   // assign colors if the matrix is on and the current mode
@@ -241,15 +364,22 @@ void rgb_matrix_indicators_user(void) {
     uint8_t layer = biton32(layer_state);
     switch (layer) {
       case BASE:
-        set_leds_color(0);
+        set_leds_color(BASE);
         break;
       case SYMB:
-        set_leds_color(1);
+        set_leds_color(SYMB);
+        break;
+      case GAME:
+      case GME2:
+        set_leds_color(GAME);
         break;
     }
   }
 }
 
+/**
+ * Executed on keypress.
+ */
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case EPRM:
@@ -263,24 +393,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef RGB_MATRIX_ENABLE
         rgblight_mode(1);
         rgblight_toggle();
-#endif
-      }
-      return false;
-      break;
-    case HSV_153_77_255:
-      if (record->event.pressed) {
-#ifdef RGB_MATRIX_ENABLE
-        rgblight_mode(1);
-        rgblight_sethsv(153,77,255);
-#endif
-      }
-      return false;
-      break;
-    case HSV_11_255_255:
-      if (record->event.pressed) {
-#ifdef RGB_MATRIX_ENABLE
-        rgblight_mode(1);
-        rgblight_sethsv(11,255,255);
 #endif
       }
       return false;
@@ -300,24 +412,18 @@ void suspend_wakeup_init_kb(void)
 }
 
 uint32_t layer_state_set_user(uint32_t state) {
-  uint8_t layer = biton32(state);
+    uint8_t layer = biton32(state);
     // TODO: Figure our what to do with board LEDs
-    // ergodox_board_led_off();
-    // ergodox_right_led_1_off();
-    // ergodox_right_led_2_off();
-    // ergodox_right_led_3_off();
+    ergodox_board_led_off();
+    ergodox_right_led_1_off();
+    ergodox_right_led_2_off();
+    ergodox_right_led_3_off();
     switch (layer) {
-        case BASE:
-        // ergodox_right_led_1_on();
-        break;
-        case SYMB:
-        // ergodox_right_led_2_on();
-        break;
-        case MDIA:
-        // ergodox_right_led_3_on();
-        break;
+        case GAME:
+            // ergodox_right_led_3_on();
+            break;
         default:
-        break;
+            break;
     }
     return state;
 };
