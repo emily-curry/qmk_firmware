@@ -182,7 +182,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 |      |      | GME2 |       |      |      |      |
  *                                 `--------------------'       `--------------------'
  */
-// GAME BASE
 [GAME] = LAYOUT_ergodox(
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
@@ -194,7 +193,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                   KC_TRNS, KC_TRNS, MO(GME2),
     // right hand
        KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-       KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_OPER,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
                  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
        KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
                           KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
@@ -207,11 +206,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        | Ctl1 | Ctl2 | Ctl3 | Ctl4 | Ctl5 |      |           | BASE | Ctl6 | Ctl7 | Ctl8 | Ctl9 | Ctl0 |        |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        | CtlQ | CtlW |      | CtlF | CtlP |      |           |      |      |      |      |      |      |        |
+ * |        | CtlQ | CtlW |      | CtlF | CtlP |CtlF12|           | CtlF5|  F1  |  F2  |  F3  |  F4  | F10  |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        | CtlA |      |      |      | CtlD |------|           |------|      |      |      |      |      |        |
+ * |        | CtlA |      |      |      | CtlD |------|           |------|  F5  |  F6  |  F7  |  F8  | F11  |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        | CtlZ | CtlX | CtlC | CtlV | CtlB |      |           |      |      |      |      |      |      |        |
+ * |        | CtlZ | CtlX | CtlC | CtlV | CtlB |      |           |      |  F9  |      |      |      | F12  |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   |      | Ctl' | Ctl` |      |      |                                       |      |      |      |      |      |
  *   `----------------------------------'                                       `----------------------------------'
@@ -223,10 +222,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 |      |      |      |       |      |      |      |
  *                                 `--------------------'       `--------------------'
  */
-// GAME BASE
 [GME2] = LAYOUT_ergodox(
        KC_TRNS, LCTL(KC_1), LCTL(KC_2), LCTL(KC_3), LCTL(KC_4), LCTL(KC_5), KC_TRNS,
-       KC_TRNS, LCTL(KC_Q), LCTL(KC_W), KC_TRNS,    LCTL(KC_P), LCTL(KC_G), KC_TRNS,
+       KC_TRNS, LCTL(KC_Q), LCTL(KC_W), KC_TRNS,    LCTL(KC_P), LCTL(KC_G), LCTL(KC_F12),
        KC_TRNS, LCTL(KC_A), KC_TRNS,    KC_TRNS,    KC_TRNS,    LCTL(KC_D),
        KC_TRNS, LCTL(KC_Z), LCTL(KC_X), LCTL(KC_C), LCTL(KC_V), LCTL(KC_B), KC_TRNS,
        KC_TRNS, LCTL(KC_QUOT),LCTL(KC_GRV),KC_TRNS, KC_TRNS,
@@ -234,11 +232,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                                             KC_TRNS,
                                                     KC_TRNS,    KC_TRNS,    KC_TRNS,
     // right hand
-       TO(BASE), LCTL(KC_6), LCTL(KC_7), LCTL(KC_8), LCTL(KC_9), LCTL(KC_0), KC_TRNS,
-       KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-       KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       TO(BASE),    LCTL(KC_6),   LCTL(KC_7), LCTL(KC_8), LCTL(KC_9), LCTL(KC_0), KC_TRNS,
+       LCTL(KC_F5), KC_F1,        KC_F12,     KC_F3,      KC_F4,      KC_F10,   KC_TRNS,
+                    KC_F5,        KC_F6,      KC_F7,      KC_F8,      KC_F11,   KC_TRNS,
+       KC_TRNS,     KC_F9,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_F12,   KC_TRNS,
+                                  KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,  KC_TRNS,
        KC_TRNS, KC_TRNS,
        KC_TRNS,
        KC_TRNS, KC_TRNS, KC_TRNS
@@ -306,14 +304,14 @@ const uint8_t PROGMEM ledcolors[][DRIVER_LED_TOTAL][3] = {
     },
     [GME2] = {
         // right side
-        {130,153,1},   {130,153,1},   {130,153,1},   {130,153,1},   {130,153,1},
-        {240,70,1},   {240,70,1},   {240,70,1},   {240,70,1},   {240,70,1},
-        {240,70,1},  {240,70,1},  {240,70,1},  {240,70,1},  {240,70,1},
-        {240,70,1},   {240,70,1},   {240,70,1},   {240,70,1},   {240,70,1},
+        {42,153,1},   {42,153,1},   {42,153,1},   {42,153,1},   {42,153,1},
+        {98,180,1},   {130,153,1},   {130,153,1},   {130,153,1},   {30,180,1},
+        {130,153,1},  {130,153,1},  {130,153,1},  {130,153,1},  {240,120,1},
+        {98,180,1},   {240,70,1},   {240,70,1},   {240,70,1},   {183,140,1},
                         {240,50,1},   {240,50,1},   {240,50,1},   {240,50,1},
 
         // left side (mirrored)
-        {130,153,1},   {130,153,1},   {130,153,1},   {130,153,1},   {130,153,1},
+        {42,153,1},   {42,153,1},   {42,153,1},   {42,153,1},   {42,153,1},
         {240,70,1},   {240,70,1},   {98,180,1},   {240,70,1},   {240,70,1},
         {240,70,1},  {98,180,1},  {98,180,1},  {98,180,1},  {240,70,1},
         {240,70,1},   {240,70,1},   {240,70,1},   {240,70,1},   {240,70,1},
@@ -370,8 +368,10 @@ void rgb_matrix_indicators_user(void) {
         set_leds_color(SYMB);
         break;
       case GAME:
-      case GME2:
         set_leds_color(GAME);
+        break;
+      case GME2:
+        set_leds_color(GME2);
         break;
     }
   }
